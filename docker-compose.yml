@@ -1,0 +1,37 @@
+#
+# https://github.com/gurucomputing/headscale-ui
+#
+
+services:
+  headscale:
+    container_name: headscale
+    image: headscale/headscale:stable
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}headscale/config:/etc/headscale
+      - ${LOCVOL1}headscale/data:/var/lib/headscale
+      #- ./container-config:/etc/headscale
+      #- ./container-data/data:/var/lib/headscale
+    # ports:
+      # - 27896:8080
+    command: serve
+    restart: unless-stopped
+  headscale-ui:
+    container_name: headscale-ui
+    image: ghcr.io/gurucomputing/headscale-ui:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    restart: unless-stopped
+    # ports:
+      # - 8443:8443
+      # - 8080:8080
+
+networks:
+  default:
+    name: ${CONNET}
+    external: true
