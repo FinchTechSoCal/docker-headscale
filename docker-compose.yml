@@ -5,11 +5,11 @@
 services:
   headscale:
     container_name: headscale
-    image: headscale/headscale:stable
+    image: headscale/headscale:${IMAGE_TAG:-stable}
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-America/Los_Angeles}
     volumes:
       - ${LOCVOL1}headscale/config:/etc/headscale
       - ${LOCVOL1}headscale/data:/var/lib/headscale
@@ -23,9 +23,9 @@ services:
     container_name: headscale-ui
     image: ghcr.io/gurucomputing/headscale-ui:latest
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-America/Los_Angeles}
     restart: unless-stopped
     # ports:
       # - 8443:8443
