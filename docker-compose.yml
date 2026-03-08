@@ -5,7 +5,7 @@
 services:
   headscale:
     container_name: headscale
-    image: headscale/headscale:${IMAGE_TAG:-stable}
+    image: ghcr.io/juanfont/headscale:latest
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
@@ -15,9 +15,12 @@ services:
       - ${LOCVOL1}headscale/data:/var/lib/headscale
       #- ./container-config:/etc/headscale
       #- ./container-data/data:/var/lib/headscale
-    # ports:
-      # - 27896:8080
+    ports:
+      - 8080:8080
+      - 9090:9090
     command: serve
+    healthcheck:
+        test: ["CMD", "headscale", "health"]
     restart: unless-stopped
   headscale-ui:
     container_name: headscale-ui
