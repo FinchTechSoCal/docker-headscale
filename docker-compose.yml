@@ -6,7 +6,7 @@
 services:
   headscale:
     container_name: headscale
-    image: ghcr.io/juanfont/headscale:latest
+    image: ghcr.io/juanfont/headscale:${HEADSCALE_IMAGE_TAG:-latest}
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
